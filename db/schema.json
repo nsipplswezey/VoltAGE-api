@@ -1,0 +1,23 @@
+{
+
+  "migration_id": 2017111720521142,
+
+  "models": {
+
+    "Detector": {
+
+      "table": "detectors",
+
+      "columns": [
+        {"name": "id", "type": "serial", "properties": {"nullable":false,"primary_key":true,"auto_increment":true}},
+        {"name": "history", "type": "json", "properties": {}},
+        {"name": "parameters", "type": "string", "properties": {}},
+        {"name": "created_at", "type": "datetime", "properties": {}},
+        {"name": "updated_at", "type": "datetime", "properties": {}}
+      ]
+
+    }
+
+  }
+
+}
