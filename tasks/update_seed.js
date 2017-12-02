@@ -6,43 +6,36 @@ class UpdateSeedTask {
 
   exec(args, callback) {
 
-    console.log('UpdateSeed task executed');
+    console.log('Executing update seed');
 
-		fs.readFile(__dirname + '/../VoltAGE_1_predictor.txt', 'utf8', (err, model) => {
-		  if(err) throw err;
+	let paths = ['/../VoltAGE_1_predictor.txt','/../VoltAGE_2_predictor.txt']
 
-			console.log(model)
+	paths.forEach((path,index,collection) => {
 
-			fs.readFile(__dirname + '/../config/seed.json', 'utf8', (err, seed) => {
-				console.log(seed);
+      let model = fs.readFileSync(__dirname + path, 'utf8')
 
-				let seedObject = JSON.parse(seed);
+      let seed = fs.readFileSync(__dirname + '/../config/seed.json', 'utf8')
 
-				seedObject.development.Detector = [
-					{
-					"history": {},
-					"parameters":model
-					}
-				]
-				seedObject.production.Detector = [
-					{
-					"history": {},
-					"parameters":model
-					}
-				]
-				console.log(seedObject.development.Detector[0])
+      let seedObject = JSON.parse(seed)
 
-				fs.writeFile(__dirname + '/../config/seed.json',JSON.stringify(seedObject,null,2), 'utf8', ((err)=>{
-				  console.log("seed written")
-				  console.log(arguments[0])
-				  console.log(arguments[1])
-				}))
-			
-			});
+	  let predictor = {}
+	  predictor.history = {} 
+	  predictor.parameters = model 
+      
+	  seedObject.development.Detector.push(predictor)
+      seedObject.production.Detector.push(predictor)
 
-
-		});
-
+	  try {
+	    let seedString = JSON.stringify(seedObject,null,2)
+		console.log(seedString)
+		console.log(seedObject)
+        fs.writeFileSync(__dirname + '/../config/seed.json', seedString, 'utf8') 
+        console.log('Seed updated');
+	  } catch(e) {
+	    console.error(e)
+	  }
+		
+	})
     //callback();
 
   }

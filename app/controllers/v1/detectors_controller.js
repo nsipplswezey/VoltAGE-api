@@ -26,7 +26,7 @@ class V1DetectorsController extends Nodal.Controller {
     });
 
   }
-
+/*
   create() {
 
     Detector.create(this.params.body, (err, model) => {
@@ -56,7 +56,7 @@ class V1DetectorsController extends Nodal.Controller {
     });
 
   }
-
+*/
 }
 
 module.exports = V1DetectorsController;
